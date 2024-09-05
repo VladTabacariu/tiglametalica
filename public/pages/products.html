@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+
+    <title>Lista produse</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /* Container for product list */
+      #product-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Space between product cards */
+        padding: 20px;
+        justify-content: center;
+      }
+
+      /* Styling for each product card */
+      .product-card {
+        width: 250px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden; /* Rounded corners */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative; /* To position button within the card */
+      }
+
+      /* Hover effects for the product card */
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Link styling to make the whole card clickable */
+      .product-link {
+        text-decoration: none;
+        color: inherit;
+        display: block; /* Make the link take up the whole card */
+      }
+
+      /* Image styling */
+      .product-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      /* Product name */
+      .product-card h2 {
+        font-size: 1.2em;
+        margin: 15px 10px 10px;
+        color: #333;
+      }
+
+      /* Product price */
+      .product-card p {
+        font-size: 1em;
+        margin: 0 10px 15px;
+        color: #666;
+      }
+
+      /* Styling for the add button */
+      .add-button {
+        position: absolute; /* Positioned relative to the card */
+        bottom: 15px;
+        right: 15px;
+        background-color: #28a745;
+        border: none;
+        color: #fff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Icon inside the button */
+      .add-button i {
+        font-size: 1.2em;
+      }
+
+      /* Hover effect for the add button */
+      .add-button:hover {
+        background-color: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <body>
+      <div class="container">
+        <div id="header"></div>
+        <div id="main">
+          <h1>Lista produse</h1>
+
+          <ul id="product-list"></ul>
+        </div>
+        <div id="footer"></div>
+      </div>
+    </body>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("/get_all_products")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((products) => {
+            const productList = document.getElementById("product-list");
+            products.forEach((product) => {
+              const card = document.createElement("div");
+              card.classList.add("product-card");
+              card.innerHTML = `
+                      <a href="/product?id=${product.id}" class="product-link">
+                        <img src="assets/images/${
+                          product.imagine
+                        }"" class="product-image" alt="${product.nume}"
+                        onerror="this.onerror=null; this.src='assets/utils/placeholder-image.png'">
+                        <h2>${product.nume}</h2>
+                        <p>Pret: ${(product.pret * 5 * 1.19).toFixed(
+                          2
+                        )} lei / ${product.um}</p>
+                      </a>        
+                        <button class="add-button"><i class="fas fa-plus-circle"></i></button>
+                    `;
+              productList.appendChild(card);
+              // Add event listener to the "Add" button
+              const addButton = card.querySelector(".add-button");
+              addButton.addEventListener("click", () => {
+                // Display product name when the "Add" button is clicked
+                addToCart(product.id, product.nume, product.um, product.pret);
+                //alert(`Product added: ${product.id}`);
+              });
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      });
+    </script>
+
+    <script src="js/includes.js"></script>
+  </body>
+</html>

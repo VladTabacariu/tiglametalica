@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="js/main.js"></script>
+
+    <title>Lista produse</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      h2 {
+        color: #333;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #007bff;
+        color: #fff;
+        font-weight: bold;
+      }
+      td {
+        background-color: #f9f9f9;
+      }
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+      .hidden {
+        display: none;
+      }
+      .expandable {
+        cursor: pointer;
+      }
+      .product-row {
+        background-color: #fafafa;
+      }
+      select {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 6px;
+        background-color: #fff;
+      }
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      button.delete-button {
+        background-color: #dc3545;
+      }
+      button.delete-button:hover {
+        background-color: #c82333;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <body>
+      <div class="container">
+        <div id="header"></div>
+        <div id="main">
+          <h1>Profil</h1>
+          <ul>
+            <li><label>Nume: </label><span id="username"></span></li>
+            <li><label>Email: </label><span id="email"></span></li>
+          </ul>
+          <table id="ordersTable">
+            <thead>
+              <tr>
+                <th>Nume</th>
+                <th>Email</th>
+                <th>Adresa livrare</th>
+                <th>Metoda plata</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Orders will be populated here -->
+            </tbody>
+          </table>
+        </div>
+        <div id="footer"></div>
+      </div>
+    </body>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const user = await getSessionUser();
+        sessionStorage.setItem("user", JSON.stringify(user));
+
+        document.getElementById("username").innerHTML = user.username;
+        document.getElementById("email").innerHTML = user.email;
+
+        //window.dispatchEvent(new StorageEvent("storage", { key: "user" }));
+      });
+
+      // Function to fetch and display orders
+      async function fetchOrders() {
+        const response = await fetch("/api/user_orders");
+        const orders = await response.json();
+        const tbody = document.querySelector("#ordersTable tbody");
+        tbody.innerHTML = ""; // Clear existing rows
+
+        orders.forEach((order) => {
+          const row = document.createElement("tr");
+          row.classList.add("expandable");
+          row.innerHTML = `
+
+                    <td>${order.customer_name}</td>
+                    <td>${order.customer_email}</td>
+                    <td>${order.delivery_address}</td>
+                    <td>${order.payment_method}</td>
+                    <td>${order.status}</td>
+                    <td>${order.order_date}</td>
+                    <td>
+                        <button onclick="toggleProducts('${order.order_id}')">Expand</button>
+                      
+                    </td>
+                    
+                `;
+          tbody.appendChild(row);
+
+          // Add a hidden row for products
+          const productRow = document.createElement("tr");
+          productRow.classList.add("product-row", "hidden");
+          productRow.id = `products-${order.order_id}`;
+          productRow.innerHTML = `
+                    <td colspan="6">
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Nume</th>
+                                    <th>Pret</th>
+                                    <th>UM</th>
+                                    <th>Cantitate</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-list-${order.order_id}">
+                                <!-- Products will be populated here -->
+                            </tbody>
+                        </table>
+                    </td>
+                `;
+          tbody.appendChild(productRow);
+
+          // Populate products immediately
+          const products = JSON.parse(order.products);
+          const productTbody = document.getElementById(
+            `product-list-${order.order_id}`
+          );
+
+          products.forEach((product) => {
+            const productRow = document.createElement("tr");
+            productRow.innerHTML = `
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                        <td>${product.um}</td>
+                        <td>${product.quantity}</td>
+                        <td>${product.price * product.quantity}</td>
+                    `;
+            productTbody.appendChild(productRow);
+          });
+        });
+      }
+
+      // Function to toggle product visibility
+      function toggleProducts(orderId) {
+        const productRow = document.getElementById(`products-${orderId}`);
+        productRow.classList.toggle("hidden");
+      }
+
+      // Fetch orders on page load
+      fetchOrders();
+    </script>
+    <script src="js/includes.js"></script>
+  </body>
+</html>

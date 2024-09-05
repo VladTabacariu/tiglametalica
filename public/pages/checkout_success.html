@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+
+    <title>Trimite comanda</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .checkout-form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+      .checkout-form h2 {
+        text-align: center;
+      }
+      .checkout-form label {
+        display: block;
+        margin-top: 10px;
+      }
+      .checkout-form input,
+      .checkout-form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+      .checkout-form button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .checkout-form button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body onload="renderProducts()">
+    <body>
+      <div class="container">
+        <div id="header"></div>
+        <div id="main">
+          <h1>Comanda trimisa cu succes!</h1>
+        </div>
+        <div id="footer"></div>
+      </div>
+    </body>
+    <script>
+      if (sessionStorage.getItem("user")) {
+        let currentUserId = JSON.parse(sessionStorage.getItem("user")).id;
+        let currentUserCartKey = "cart_" + currentUserId;
+        localStorage.removeItem(currentUserCartKey);
+      }
+    </script>
+    <script src="js/includes.js"></script>
+  </body>
+</html>

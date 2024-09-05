@@ -1,0 +1,494 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo img {
+  width: 100px;
+  border-radius: 5px;
+}
+
+/* Navigation links */
+.nav-links ul {
+  list-style: none;
+}
+
+.nav-links li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.search-box input[type="text"] {
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.search-box button {
+  background-color: #555;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background-color: #666;
+}
+
+.user-controls a {
+  color: #fff;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-box {
+    margin-top: 10px;
+  }
+
+  .user-controls {
+    margin-top: 10px;
+  }
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer-info p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+  }
+
+  .footer-links {
+    margin-bottom: 10px;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+  overflow: auto;
+}
+
+.product-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  display: inline-block;
+  vertical-align: top;
+  background-color: #f9f9f9;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.add-button {
+  background-color: #666464;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.remove-button {
+  background-color: #be3a3a;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.quantity-button {
+  background-color: #666666;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#product-list {
+}
+
+#cartBadge:after {
+  content: attr(value);
+  font-size: 12px;
+  background: red;
+  border-radius: 50%;
+  padding: 4px 8px;
+  position: relative;
+  left: -8px;
+  top: -10px;
+  opacity: 0.9;
+}
+
+.carousel-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 50px auto;
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+}
+
+.carousel-slide {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item {
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.overlay p {
+  color: white;
+  font-size: 24px;
+  text-align: center;
+}
+
+.shop {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+  background-color: #547cc7;
+  border: 2px solid #547cc7;
+  border-radius: 5px;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.shop:hover {
+  background-color: #90afe9;
+  border-color: #90afe9;
+}
+
+#cart {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual product container */
+#cart .product-item {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Product name */
+#cart .product-item p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Product price and unit of measurement (UM) */
+#cart .product-item p:nth-child(2),
+#cart .product-item p:nth-child(3) {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Quantity input field */
+#cart .product-item input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  font-size: 14px;
+  margin-left: 5px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Buttons for quantity adjustment */
+#cart .quantity-button,
+#orderButton {
+  padding: 5px 10px;
+  margin-left: 5px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#cart .quantity-button:hover {
+  background-color: #0056b3;
+}
+
+/* Remove button */
+#cart .remove-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#cart .remove-button:hover {
+  background-color: #c82333;
+}
+
+/* Icon inside the remove button */
+#cart .remove-button i {
+  margin-right: 5px;
+}
+
+/* Separator line */
+#cart hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 15px 0;
+}
+
+h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Styling the unordered list */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual list items */
+ul li {
+  margin-bottom: 10px;
+  padding: 8px 0;
+}
+
+/* Label styling */
+ul li label {
+  font-weight: bold;
+  font-size: 16px;
+  color: #555;
+  margin-right: 10px;
+}
+
+/* Styling the span that holds the user data */
+ul li span {
+  font-size: 16px;
+  color: #333;
+}
+
+.contact-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Page title */
+.contact-container h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Paragraph text */
+.contact-container p {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Form styling */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.contact-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Input fields */
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Button styling */
+.contact-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #0056b3;
+}
+
+.primary-button {
+  padding: 5px 10px;
+  margin-left: 5px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}

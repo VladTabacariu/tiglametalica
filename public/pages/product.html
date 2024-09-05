@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+
+    <title>Lista produse</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .product-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .product-details {
+        text-align: center;
+      }
+
+      .product-details img {
+        max-width: 50%;
+        height: auto;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+      }
+
+      .product-details h2 {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+
+      .product-details p {
+        margin: 10px 0;
+        color: #555;
+      }
+
+      .product-details .price {
+        font-size: 1.5em;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <body>
+      <div class="container">
+        <div id="header"></div>
+        <div id="main">
+          <div class="product-container">
+            <div id="product-details" class="product-details">
+              <!-- Product details will be inserted here dynamically -->
+            </div>
+          </div>
+        </div>
+        <div id="footer"></div>
+      </div>
+    </body>
+
+    <script src="js/includes.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get("id");
+
+        if (productId) {
+          fetch(`/api/product/${productId}`)
+            .then((response) => response.json())
+            .then((product) => {
+              const productDetails = document.getElementById("product-details");
+
+              if (product.error) {
+                productDetails.innerHTML = `<p>${product.error}</p>`;
+                return;
+              }
+
+              productDetails.innerHTML = `
+              <img src="assets/images/${product.imagine}" alt="${product.nume}">
+              <h2>${product.nume}</h2>
+              <p class="price">${(product.pret * 5 * 1.19).toFixed(2)} lei / ${
+                product.um
+              }</p>
+          
+              <button class="add-button">Adauga in cos</button>
+            `;
+              // Add event listener to the "Add" button
+              const addButton = productDetails.querySelector(".add-button");
+              addButton.addEventListener("click", () => {
+                // Display product name when the "Add" button is clicked
+                addToCart(product.id, product.nume, product.um, product.pret);
+                //alert(`Product added: ${product.id}`);
+              });
+            })
+            .catch((error) => {
+              console.error("Error fetching product details:", error);
+              document.getElementById("product-details").innerHTML =
+                "<p>Failed to load product details.</p>";
+            });
+        } else {
+          document.getElementById("product-details").innerHTML =
+            "<p>No product ID specified.</p>";
+        }
+      });
+    </script>
+  </body>
+</html>

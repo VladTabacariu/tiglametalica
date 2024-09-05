@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+
+    <title>Trimite comanda</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .checkout-form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+      .checkout-form h2 {
+        text-align: center;
+      }
+      .checkout-form label {
+        display: block;
+        margin-top: 10px;
+      }
+      .checkout-form input,
+      .checkout-form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+      .checkout-form button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .checkout-form button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body onload="renderProducts()">
+      <div class="container">
+        <div id="header"></div>
+        <div id="main">
+          <h1>Detalii comanda</h1>
+          <ul id="cart"></ul>
+          <div class="checkout-form">
+            <h2>Checkout</h2>
+            <form action="/checkout" method="post">
+              <label for="customer-name">Nume si prenume:</label>
+              <input
+                type="text"
+                id="customer-name"
+                name="customer_name"
+                required
+              />
+              <label for="address">Adresa de livrare:</label>
+              <input type="text" id="address" name="address" required />
+
+              <label for="payment-method">Metoda plata:</label>
+              <select id="payment-method" name="payment_method" required>
+                <option value="Card online">Card online</option>
+                <option value="Ramburs la curier">Ramburs la curier</option>
+                <option value="Transfer bancar">Transfer bancar</option>
+              </select>
+              <input name="products" id="products" hidden />
+              <button type="submit">Trimite comanda</button>
+            </form>
+          </div>
+        </div>
+        <div id="footer"></div>
+      </div>
+    </body>
+    <script>
+      let currentUserId = JSON.parse(sessionStorage.getItem("user")).id;
+      let currentUserCartKey = "cart_" + currentUserId;
+      let cart = localStorage.getItem(currentUserCartKey || "[]");
+      document.getElementById("products").value = cart;
+    </script>
+    <script src="js/includes.js"></script>
+  </body>
+</html>
